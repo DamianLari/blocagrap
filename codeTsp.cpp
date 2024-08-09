@@ -5,18 +5,16 @@
 
 using namespace std;
 
-// Fonction pour calculer la distance totale d'un chemin donné
 double calculateTotalDistance(const vector<int>& path, const vector<vector<double> >& distances) {
     double totalDistance = 0;
     for (size_t i = 0; i < path.size() - 1; ++i) {
         totalDistance += distances[path[i]][path[i + 1]];
     }
-    totalDistance += distances[path.back()][path.front()]; // Retour à la ville de départ
+    totalDistance += distances[path.back()][path.front()]; 
     return totalDistance;
 }
 
 int main() {
-    // Liste des villes (indices)
     vector<string> cities;
     cities.push_back("Rouen");
     cities.push_back("Le Petit-Quevilly");
@@ -30,7 +28,6 @@ int main() {
     cities.push_back("Grand-Couronne");
     cities.push_back("Quevillon");
 
-    // Matrice des distances
     vector<vector<double> > distances = {
         {0.000000, 2.963495, 15.416571, 4.561632, 5.771724, 4.558626, 9.719719, 6.381599, 10.902434, 11.655627, 10.539540},
         {2.963495, 0.000000, 12.453464, 5.166462, 8.727359, 5.745849, 10.836939, 5.008939, 9.372577, 8.871207, 7.981572},
@@ -45,17 +42,14 @@ int main() {
         {10.539540, 7.981572, 7.662052, 8.986413, 16.065461, 13.588076, 18.381224, 10.896226, 13.490058, 8.259031, 0.000000}
     };
 
-    // Initialiser le meilleur chemin et la meilleure distance
     vector<int> bestPath;
     double bestDistance = numeric_limits<double>::infinity();
 
-    // Indices des villes
     vector<int> indices(cities.size());
     for (size_t i = 0; i < indices.size(); ++i) {
         indices[i] = i;
     }
 
-    // Générer toutes les permutations possibles des indices de villes
     do {
         double currentDistance = calculateTotalDistance(indices, distances);
         if (currentDistance < bestDistance) {
@@ -64,7 +58,6 @@ int main() {
         }
     } while (next_permutation(indices.begin(), indices.end()));
 
-    // Afficher le meilleur chemin et la meilleure distance
     cout << "Meilleur chemin: ";
     for (size_t i = 0; i < bestPath.size(); ++i) {
         cout << cities[bestPath[i]];
